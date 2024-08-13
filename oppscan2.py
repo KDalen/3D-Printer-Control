@@ -732,9 +732,12 @@ class MyApp(BaseUiClass, QtWidgets.QMainWindow):  # inherit all properties from 
         #write.writerows(rows)
         # Ensure the conductance folder exists
         folder = 'Conductance'
+        if not os.path.exists(folder):
+            os.makedirs(folder)
+            print("Conductance folder created")
         
         # Construct the file path
-        file_path = os.path.join( str(text) + '.csv')
+        file_path = os.path.join(folder, str(text) + '.csv')
         header = ["time (ms)", "conductance", "x", "y", "z"]
         
         
@@ -1274,7 +1277,7 @@ class MyApp(BaseUiClass, QtWidgets.QMainWindow):  # inherit all properties from 
             self.stop_recording()
         else:
             self.video_btn.setText("Stop Recording")
-            self.camThread.start_recording("output.mp4")
+            self.camThread.start_recording()
             self.recording_symbol.setStyleSheet("background-color: red; border-radius: 15px;")
         
 

@@ -40,13 +40,27 @@ class CamThread(QtCore.QThread):
 
             QtCore.QThread.msleep(int(1000 / self.fps))  
 
-    def start_recording(self, output_file):
-        folder = 'Video'
+    # def start_recording(self, output_file):
+    #     folder = 'Video'
+    #     file_path = os.path.join(folder, str(time.time()) + '.mp4')
+    #     fourcc = cv2.VideoWriter_fourcc(*'mp4v')
+    #     self.out = cv2.VideoWriter(file_path, fourcc, self.fps, (500, 219))
+    #     self.recording = True
+    #     print(f"Recording started: {file_path}")
+        
+        
+    def start_recording(self):
+        folder = 'video'
+        if not os.path.exists(folder):
+            os.makedirs(folder)
+            print("video folder created")
         file_path = os.path.join(folder, str(time.time()) + '.mp4')
-        fourcc = cv2.VideoWriter_fourcc(*'mp4v')
-        self.out = cv2.VideoWriter(file_path, fourcc, self.fps, (500, 219))
+        fourcc = cv2.VideoWriter_fourcc(*'MP4A')
+        self.out = cv2.VideoWriter(file_path, fourcc, self.fps, (int(self.cap.get(3)),int(self.cap.get(4))))
         self.recording = True
         print(f"Recording started: {file_path}")
+    
+        
 
     def stop_recording(self):
         self.recording = False
@@ -64,7 +78,7 @@ class CamThread(QtCore.QThread):
     def take_photo(self):
         folder = 'Images'
         
-        file_path = os.path.join(folder, time.time() + '.jpg')
+        file_path = os.path.join(folder, str(time.time()) + '.jpg')
         cv2.imwrite(file_path, self.frame)
         print("Photo saved")
         

@@ -362,7 +362,8 @@ class Gcode(object):
                 
                 self.codestr=' '.join(self.codelist)
                 
-                file_path = os.path.join(folder, str(self.filename) + '.gcode')
+
+                file_path = str(self.filename) + '.gcode'
                 with open(file_path, "w") as output:
                         output.write(str(self.codestr))
                 print(("Saved as: %s.gcode") %(self.filename))
