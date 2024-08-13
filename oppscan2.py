@@ -1104,8 +1104,8 @@ class MyApp(BaseUiClass, QtWidgets.QMainWindow):  # inherit all properties from 
         self.ref_conductance_select.setEnabled(toggle)
         self.ref_z_lower.setEnabled(toggle)
         
-        self.ref_z_retract.setEnabled(toggle)
-        self.ref_z_offset.setEnabled(toggle)
+        
+        
         self.ref_x_pos.setEnabled(toggle)
         self.ref_y_pos.setEnabled(toggle)
         self.ref_sample.setEnabled(toggle)
@@ -1120,13 +1120,11 @@ class MyApp(BaseUiClass, QtWidgets.QMainWindow):  # inherit all properties from 
         if self.ref_set_select.isChecked() == True:
             self.Gcode.ref_probe = False
             self.ref_z_lower.setEnabled(True)
-            self.ref_z_retract.setEnabled(False)
-            self.ref_z_offset.setEnabled(False)
         else:
             self.Gcode.ref_probe = True
             self.ref_z_lower.setEnabled(False)
-            self.ref_z_retract.setEnabled(True)
-            self.ref_z_offset.setEnabled(True)
+
+
             
     
     def enable_parameters(self):

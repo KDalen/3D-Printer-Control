@@ -1283,6 +1283,7 @@ class Ui_MainWindow(object):
         self.ref_end_btn.setObjectName("ref_end_btn")
         self.ref_end_btn.setStyleSheet(blue_button)
         self.ref_end_btn.setText("On")
+        self.ref_end_btn.setCheckable(True)
         
         
         
