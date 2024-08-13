@@ -261,8 +261,6 @@ class console_control(QtCore.QThread):
 
                 self.pos = [float(line[0][2:]), float(line[1][2:]), float(line[2][2:])]
                 self.posqueue.put(self.pos)
-                print(self.pos)
-                print("current position", self.current_position)
                 if self.current_position == self.pos[2] and self.conductance_mode:
                     self.response = True
                 elif not self.conductance_mode:
