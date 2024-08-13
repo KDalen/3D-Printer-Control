@@ -1258,6 +1258,16 @@ class MyApp(BaseUiClass, QtWidgets.QMainWindow):  # inherit all properties from 
         """
         self.Pump.qdwell = self.pump_dwellq_sel.value()
         print(self.Pump.qdwell)
+        
+    def send_absolute_pos(self):
+        """
+        send absolute position to printer
+        
+        """
+        
+        self.Printer.cmd("G90")
+        self.Printer.cmd("G0 X"+str(self.prt_x_val.value())+" Y"+str(self.prt_y_val.value())+" Z"+str(self.prt_z_val.value())+" F5000")
+
 
     def update_frame(self, frame):
             # Convert the frame to QImage and display it
