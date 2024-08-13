@@ -731,12 +731,10 @@ class MyApp(BaseUiClass, QtWidgets.QMainWindow):  # inherit all properties from 
         #print(self.conThread.values)
         #write.writerows(rows)
         # Ensure the conductance folder exists
-        folder = 'conductance'
-        if not os.path.exists(folder):
-            os.makedirs(folder)
-            print("conductance folder created")
+        folder = 'Conductance'
+        
         # Construct the file path
-        file_path = os.path.join(folder, str(text) + '.csv')
+        file_path = os.path.join( str(text) + '.csv')
         header = ["time (ms)", "conductance", "x", "y", "z"]
         
         

@@ -357,9 +357,7 @@ class Gcode(object):
                 save the gcode to a file
                 '''
                 folder = 'Gcode'
-                if not os.path.exists(folder):
-                        os.makedirs(folder)
-                        print("Gcode folder created")
+                
                 #remove commas from gcode list
                 
                 self.codestr=' '.join(self.codelist)
