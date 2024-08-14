@@ -1741,11 +1741,12 @@ class Ui_MainWindow(object):
         num_items = combobox.count()
         
         font_metrics = QtGui.QFontMetrics(combobox.font())
-        max_width = max(font_metrics.width(combobox.itemText(i)) for i in range(combobox.count()))
-        max_width += 20
+        if combobox.count() >0:
+            max_width = max(font_metrics.width(combobox.itemText(i)) for i in range(combobox.count()))
+            max_width += 20
         
-        combobox.view().setMinimumWidth(max_width)
-        combobox.view().setMinimumHeight(num_items*item_height +15)
+            combobox.view().setMinimumWidth(max_width)
+            combobox.view().setMinimumHeight(num_items*item_height +15)
                         
 
     
