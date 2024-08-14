@@ -740,7 +740,7 @@ class Ui_MainWindow(object):
         self.gc_flag.setStyleSheet("background-color: #1BE03F; border-radius: 20px;")
         
         self.ready_label = QtWidgets.QLabel(sample_tab)
-        self.ready_label.setGeometry(QtCore.QRect(400, 405, 90, 30))
+        self.ready_label.setGeometry(QtCore.QRect(400, 405, 110, 30))
         self.ready_label.setObjectName("ready_label")
         self.ready_label.setStyleSheet(text_style_regular)
         self.ready_label.setText("Ready")
