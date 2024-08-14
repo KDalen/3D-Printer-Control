@@ -756,7 +756,7 @@ class Ui_MainWindow(object):
         self.gc_zspeed_sel.setGeometry(QtCore.QRect(120, 385, 105, 30))
         self.gc_zspeed_sel.setObjectName("gc_zspeed_sel")
         self.gc_zspeed_sel.setStyleSheet(doubleSpinBox)
-        self.gc_zspeed_sel.setValue(1)
+        self.gc_zspeed_sel.setValue(50)
         self.gc_zspeed_sel.setMinimum(1)
         self.gc_zspeed_sel.setMaximum(10000)
         

@@ -1170,10 +1170,10 @@ class MyApp(BaseUiClass, QtWidgets.QMainWindow):  # inherit all properties from 
     def ref_end(self):
         if self.ref_end_btn.isChecked():
             self.ref_end_btn.setText("Off")
-            self.Gcode.ref_end = True
+            self.Gcode.ref_end_flag = True
         else:
             self.ref_end_btn.setText("On")
-            self.Gcode.ref_end = False
+            self.Gcode.ref_end_flag = False
     #Action Buttons for Pump
     def calculate_parameters_sample(self):
         
