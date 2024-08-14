@@ -1039,7 +1039,7 @@ class Ui_MainWindow(object):
         
         #conduction
         self.conduction_label = QtWidgets.QLabel(self.centralwidget)
-        self.conduction_label.setGeometry(QtCore.QRect(1065, 135, 210, 50))
+        self.conduction_label.setGeometry(QtCore.QRect(1065, 135, 220, 50))
         self.conduction_label.setObjectName("conduction_label")
         self.conduction_label.setStyleSheet("font: 22pt ; font-weight: semi-bold; text-decoration: underline;")
         self.conduction_label.setText("Conductance:")

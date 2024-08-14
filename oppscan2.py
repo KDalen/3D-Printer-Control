@@ -1281,7 +1281,7 @@ class MyApp(BaseUiClass, QtWidgets.QMainWindow):  # inherit all properties from 
         """
         
         self.Printer.cmd("G90")
-        self.Printer.cmd("G0 X"+str(self.prt_x_val.value())+" Y"+str(self.prt_y_val.value())+" Z"+str(self.prt_z_val.value())+" F5000")
+        self.Printer.cmd("G0 X"+str(self.prt_x_val.value())+" Y"+str(self.prt_y_val.value())+" Z"+str(self.prt_z_val.value())+" F2000")
 
 
     def update_frame(self, frame):
