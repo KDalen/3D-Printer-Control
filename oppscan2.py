@@ -282,23 +282,36 @@ class MyApp(BaseUiClass, QtWidgets.QMainWindow):  # inherit all properties from 
             button.clicked.connect(lambda: self.prt_startrun_btn.setEnabled(False))
         
     def help(self):
-        pdf_path = './help.pdf'
-        content = self.load_pdf_content(pdf_path)
+        pdf_path = './help3.pdf'
 
+        # Open the PDF file
+        doc = fitz.open(pdf_path)
+        
+        # Extract text from the PDF as HTML
+        html_content = ""
+        for page_num in range(doc.page_count):
+            page = doc.load_page(page_num)
+            html_content += page.get_text("html")  # Extract text as HTML
+
+        # Save the extracted HTML content to an HTML file
+        with open("output.html", "w") as file:
+            file.write(html_content)
+
+        # Create a dialog window
         dialog = QtWidgets.QDialog(self)
         dialog.setWindowTitle("Help PDF")
         dialog.setGeometry(100, 100, 600, 800)
 
         layout = QtWidgets.QVBoxLayout(dialog)
-        text_edit = QtWidgets.QTextEdit(dialog)
-        text_edit.setReadOnly(True)
-        text_edit.setPlainText(content)
 
-        layout.addWidget(text_edit)
+        # Display the HTML content in a QTextBrowser
+        text_browser = QtWidgets.QTextBrowser(dialog)
+        text_browser.setHtml(html_content)  # Set HTML content with formatting
+
+        layout.addWidget(text_browser)
         dialog.setLayout(layout)
         
         dialog.exec_()
-
     
     def load_pdf_content(self, pdf_path):
         document = fitz.open(pdf_path)
@@ -414,6 +427,9 @@ class MyApp(BaseUiClass, QtWidgets.QMainWindow):  # inherit all properties from 
         elif typ == "Warning Constant Z mode":
             title = "Warning"
             msg = "Constant Z mode is enabled, please ensure that the Z value is set to the desired value"
+        elif typ =="Take out probe":
+            title = "Warning"
+            msg = "Please take out the probe before homing"
         else:
             title = 'unknown error'
             msg = 'unknown error, see messageBox function'
@@ -829,6 +845,7 @@ class MyApp(BaseUiClass, QtWidgets.QMainWindow):  # inherit all properties from 
         """
         home the device
         """
+        my_app.messagebox(typ="Take out probe", icon="w")
         self.Printer.home()
 
     def readprtposqueue(self,pos_queue, temp_queue):
