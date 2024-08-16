@@ -1143,7 +1143,13 @@ class MyApp(BaseUiClass, QtWidgets.QMainWindow):  # inherit all properties from 
         if self.ref_set_select.isChecked() == True:
             self.Gcode.ref_probe = False
             self.ref_z_lower.setEnabled(True)
+            self.z_last_rb.setEnabled(True)
         else:
+            self.z_first_rb.setChecked(True)
+            
+            self.z_last_rb.setChecked(False)
+            self.z_last_rb.setEnabled(False)
+            self.z_first_last()
             self.Gcode.ref_probe = True
             self.ref_z_lower.setEnabled(False)
 
