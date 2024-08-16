@@ -822,6 +822,7 @@ class Ui_MainWindow(object):
         self.gc_lz_sel.setGeometry(QtCore.QRect(325, 535, 105, 30))
         self.gc_lz_sel.setObjectName("gc_lz_sel")
         self.gc_lz_sel.setStyleSheet(doubleSpinBox)
+        self.gc_lz_sel.setMaximum(180)
         
         
         self.gc_currentlz_btn = QtWidgets.QPushButton(sample_tab)
@@ -1651,7 +1652,7 @@ class Ui_MainWindow(object):
         self.con_threshold_sp.setMinimum(0)
 
         #set value of gc_lz_sel
-        self.gc_lz_sel.setValue(20.0)
+        self.gc_lz_sel.setValue(50.0)
         
    
         
@@ -1661,7 +1662,7 @@ class Ui_MainWindow(object):
         
         self.gc_starty_sel.setMaximum(250.0)
         
-        self.gc_lz_sel.setValue(1.0)
+        
         
 
 
@@ -1675,7 +1676,7 @@ class Ui_MainWindow(object):
         self.gc_resy_sel.setValue(2)
         self.gc_resy_sel.setMaximum(250)
         
-        self.gc_zspeedup_sel.setMaximum(1700)
+        self.gc_zspeedup_sel.setMaximum(10000)
         self.gc_zspeedup_sel.setValue(725)
         
         self.gc_speedxy_sel.setMinimum(1)
@@ -1689,7 +1690,7 @@ class Ui_MainWindow(object):
         self.gc_pause_sel.setValue(2)
         
         self.gc_step_sel.setDecimals(3)
-        self.gc_step_sel.setMaximum(1)
+        self.gc_step_sel.setMaximum(5)
         self.gc_step_sel.setMinimum(0.001)
         self.gc_step_sel.setValue(0.05)
         self.gc_step_sel.setSingleStep(0.001)

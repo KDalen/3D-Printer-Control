@@ -193,29 +193,40 @@ class Gcode(object):
                         self.AppendPosXY(x,y) #set position for x and y
                         self.Zspeed(self.zspeed)
                         self.AppendPos(x,y,z)
-                        self.AppendPause(sample_time)
+                        self.AppendPause((int(sample_time)*1000))
                         self.Zspeed(self.zspeedup)
                         self.AppendPos(x,y,self.startz)
+                        self.AppendPause(int(dwell_time)*1000)
+                
                         
                  
                     
                 elif not self.probe and self.ref_probe:
                         self.probe = True
-                        #code
-                        self.Sampling(x,y)
+                        self.AppendProbe(x,y) # adds G0 z- step command then sets back to absolute
+                        self.AppendPause(int(sample_time)*1000) #pause for sampling time
+                        self.Zspeed(self.zspeedup) #set z speed to zspeedup
+                        self.AppendPos(x, y, self.startz) #set position for next movement
+                        self.AppendPause(int(dwell_time)*1000)#pause for pausems
+                
                         
                         
                         self.probe = False
                 elif self.probe and self.ref_probe:
                         
-                        self.Sampling(x,y)
+                        self.AppendProbe(x,y) # adds G0 z- step command then sets back to absolute
+                        self.AppendPause(int(sample_time)*1000) #pause for sampling time
+                        self.Zspeed(self.zspeedup) #set z speed to zspeedup
+                        self.AppendPos(x, y, self.startz) #set position for next movement
+                        self.AppendPause(int(dwell_time)*1000) #pause for pausems
                 else:
                         self.AppendPosXY(x,y) #set position for x and y
                         self.Zspeed(self.zspeed)
                         self.AppendPos(x,y,z)
-                        self.AppendPause(sample_time)
+                        self.AppendPause(int(sample_time)*1000)
                         self.Zspeed(self.zspeedup)
                         self.AppendPos(x,y,self.startz)
+                        self.AppendPause(int(dwell_time)*1000)
         def AppendPos(self,x,y,z, speed = None): #going to be obsoluete soon
                 '''
                 set the position of the printer head (added tp list of commands)

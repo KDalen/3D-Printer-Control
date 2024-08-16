@@ -214,6 +214,7 @@ class MyApp(BaseUiClass, QtWidgets.QMainWindow):  # inherit all properties from 
         self.ref_dwell.valueChanged.connect(lambda value: setattr(self.Gcode, 'ref_dwell', value))
         self.ref_sample.valueChanged.connect(lambda value: setattr(self.Gcode, 'ref_sample', value))
         
+        
         self.ref_end_btn.clicked.connect(lambda: self.ref_end())
         
         self.send_btn.clicked.connect(lambda: self.send_absolute_pos())
@@ -1105,13 +1106,14 @@ class MyApp(BaseUiClass, QtWidgets.QMainWindow):  # inherit all properties from 
             self.Gcode.probe = None
     def ref_mode_on_off(self):
         if self.ref_on_off_btn.isChecked():
-            self.ref_on_off_btn.setText("Stop") #checked means it is on
+            self.ref_on_off_btn.setText("Disable") #checked means it is on
             self.Gcode.ref_flag = True
             self.activate_ref_buttons(True)
             self.ref_gcmode()
+        
             
         else:
-            self.ref_on_off_btn.setText("Start")
+            self.ref_on_off_btn.setText("Enable")
             self.Gcode.ref_flag = False
             self.activate_ref_buttons(False)
             
@@ -1169,10 +1171,11 @@ class MyApp(BaseUiClass, QtWidgets.QMainWindow):  # inherit all properties from 
             
     def ref_end(self):
         if self.ref_end_btn.isChecked():
-            self.ref_end_btn.setText("Off")
+            self.ref_end_btn.setText("On")
+            
             self.Gcode.ref_end_flag = True
         else:
-            self.ref_end_btn.setText("On")
+            self.ref_end_btn.setText("Off")
             self.Gcode.ref_end_flag = False
     #Action Buttons for Pump
     def calculate_parameters_sample(self):
