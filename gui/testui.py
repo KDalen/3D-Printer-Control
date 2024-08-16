@@ -1218,6 +1218,12 @@ class Ui_MainWindow(object):
         self.ref_conductance_label.setStyleSheet(text_style_semibold)
         self.ref_conductance_label.setText("Conductance Mode")
         
+        self.ref_mode_group = QtWidgets.QButtonGroup(refrence_tab)
+        self.ref_mode_group.setObjectName("ref_mode_group")
+        self.ref_mode_group.addButton(self.ref_set_select)
+        self.ref_mode_group.addButton(self.ref_conductance_select)
+        
+        
         self.z_lower_ref_label = QtWidgets.QLabel(refrence_tab)
         self.z_lower_ref_label.setGeometry(QtCore.QRect(10, 130, 200, 30))
         self.z_lower_ref_label.setObjectName("z_lower_ref_label")
@@ -1274,18 +1280,72 @@ class Ui_MainWindow(object):
         self.ref_sample.setStyleSheet(doubleSpinBox)
         
         self.ref_end_label = QtWidgets.QLabel(refrence_tab)
-        self.ref_end_label.setGeometry(QtCore.QRect(10, 330, 150, 50))
+        self.ref_end_label.setGeometry(QtCore.QRect(10, 330, 150, 80))
         self.ref_end_label.setObjectName("ref_end_label")
         self.ref_end_label.setStyleSheet(text_style_semibold)
         self.ref_end_label.setText("Refrence<br> at End:")
         
-        self.ref_end_btn = QtWidgets.QPushButton(refrence_tab)
-        self.ref_end_btn.setGeometry(QtCore.QRect(150, 330, 200, 50))
-        self.ref_end_btn.setObjectName("ref_end_btn")
-        self.ref_end_btn.setStyleSheet(blue_button)
-        self.ref_end_btn.setText("On")
-        self.ref_end_btn.setCheckable(True)
+        self.ref_start_label = QtWidgets.QLabel(refrence_tab)
+        self.ref_start_label.setGeometry(QtCore.QRect(10, 400, 150, 80))
+        self.ref_start_label.setObjectName("ref_start_label")
+        self.ref_start_label.setStyleSheet(text_style_semibold)
+        self.ref_start_label.setText("Refrence<br> at Start:")
         
+        self.ref_end_rb = QtWidgets.QRadioButton(refrence_tab)
+        self.ref_end_rb.setGeometry(QtCore.QRect(150, 330, 40, 50))
+        self.ref_end_rb.setObjectName("ref_end_rb")
+        self.ref_end_rb.setStyleSheet(radio_button)
+        
+        self.ref_start_rb = QtWidgets.QRadioButton(refrence_tab)
+        self.ref_start_rb.setGeometry(QtCore.QRect(150, 400, 40, 50))
+        self.ref_start_rb.setObjectName("ref_start_rb")
+        self.ref_start_rb.setStyleSheet(radio_button)
+        self.ref_start_rb.setChecked(True)    
+        
+        self.ref_both_rb = QtWidgets.QRadioButton(refrence_tab)
+        self.ref_both_rb.setGeometry(QtCore.QRect(150, 450, 40, 50))
+        self.ref_both_rb.setObjectName("ref_both_rb")
+        self.ref_both_rb.setStyleSheet(radio_button)
+        
+        self.ref_both_label = QtWidgets.QLabel(refrence_tab)
+        self.ref_both_label.setGeometry(QtCore.QRect(10, 470, 130, 30))
+        self.ref_both_label.setObjectName("ref_both_label")
+        self.ref_both_label.setStyleSheet(text_style_semibold)
+        self.ref_both_label.setText("Both:")
+        
+        self.ref_rb_group = QtWidgets.QButtonGroup()
+        self.ref_rb_group.addButton(self.ref_end_rb)
+        self.ref_rb_group.addButton(self.ref_start_rb)
+        self.ref_rb_group.addButton(self.ref_both_rb)
+    
+        #z first and z last
+        self.z_first_label = QtWidgets.QLabel(refrence_tab)
+        self.z_first_label.setGeometry(QtCore.QRect(10, 520, 150, 30))
+        self.z_first_label.setObjectName("z_first_label")
+        self.z_first_label.setStyleSheet(text_style_semibold)
+        self.z_first_label.setText("Z First:")
+        
+        self.z_first_rb = QtWidgets.QRadioButton(refrence_tab)
+        self.z_first_rb.setGeometry(QtCore.QRect(150, 520, 40, 50))
+        self.z_first_rb.setObjectName("z_first_rb")
+        self.z_first_rb.setStyleSheet(radio_button)
+        
+        
+        self.z_last_label = QtWidgets.QLabel(refrence_tab)
+        self.z_last_label.setGeometry(QtCore.QRect(10, 570, 150, 30))
+        self.z_last_label.setObjectName("z_last_label")
+        self.z_last_label.setStyleSheet(text_style_semibold)
+        self.z_last_label.setText("Z Last:")
+        
+        self.z_last_rb = QtWidgets.QRadioButton(refrence_tab)
+        self.z_last_rb.setGeometry(QtCore.QRect(150, 570, 40, 50))
+        self.z_last_rb.setObjectName("z_last_rb")
+        self.z_last_rb.setStyleSheet(radio_button)
+        self.z_last_rb.setChecked(True)
+        
+        self.z_rb_group = QtWidgets.QButtonGroup()
+        self.z_rb_group.addButton(self.z_first_rb)
+        self.z_rb_group.addButton(self.z_last_rb)
         
         
         #pump tab

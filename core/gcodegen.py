@@ -110,6 +110,8 @@ class Gcode(object):
                 self.ref_flag = False
                 self.ref_end_flag = False
                 
+                self.ref_both_flag = False
+                
                 self.ref_x = 0
                 self.ref_y = 0
                 self.ref_z = 0
@@ -118,6 +120,8 @@ class Gcode(object):
                 
                 self.xy_acceleration = 1250 #mm/s^2
                 self.z_acceleration = 400 #mm/s^2
+                
+                self.ref_z_first = False #if true goes to specified z beofre going to x and y
 
         def calc(self):
                 ####------------------Calculated values based on input ------------------------####
@@ -181,6 +185,7 @@ class Gcode(object):
                 #self.codelist.append(("\nM203 Z%f") %(zspeed)) #comment out for now
                 self.z_speed=zspeed
         def refrence(self, x, y, dwell_time, sample_time, z = None): #TODO fix
+                print(self.ref_z_first)
                 '''
                 #Sets the reference point for the printer head
                 '''
@@ -190,43 +195,62 @@ class Gcode(object):
                         #need to set probe to false then true
                        
                         #code
-                        self.AppendPosXY(x,y) #set position for x and y
-                        self.Zspeed(self.zspeed)
-                        self.AppendPos(x,y,z)
-                        self.AppendPause((int(sample_time)*1000))
-                        self.Zspeed(self.zspeedup)
-                        self.AppendPos(x,y,self.startz)
-                        self.AppendPause(int(dwell_time)*1000)
-                
+                        if self.ref_z_first:
+                                self.Zspeed(self.zspeed)
+                                self.appendPosZ(z)
+                                self.AppendPosXY(x,y)
+                        else:
+                                self.AppendPosXY(x,y) #set position for x and y
+                                self.Zspeed(self.zspeed)
+                                self.AppendPos(x,y,z)
+                                self.AppendPause((int(sample_time)*1000))
+                                self.Zspeed(self.zspeedup)
+                                self.AppendPos(x,y,self.startz)
+                                self.AppendPause(int(dwell_time)*1000)
+                        
                         
                  
                     
                 elif not self.probe and self.ref_probe:
                         self.probe = True
-                        self.AppendProbe(x,y) # adds G0 z- step command then sets back to absolute
-                        self.AppendPause(int(sample_time)*1000) #pause for sampling time
-                        self.Zspeed(self.zspeedup) #set z speed to zspeedup
-                        self.AppendPos(x, y, self.startz) #set position for next movement
-                        self.AppendPause(int(dwell_time)*1000)#pause for pausems
+                        if self.ref_z_first:
+                                self.Zspeed(self.zspeed)
+                                self.appendPosZ(z)
+                                self.AppendPosXY(x,y)
+                        else:
+                                self.AppendProbe(x,y) # adds G0 z- step command then sets back to absolute
+                                self.AppendPause(int(sample_time)*1000) #pause for sampling time
+                                self.Zspeed(self.zspeedup) #set z speed to zspeedup
+                                self.AppendPos(x, y, self.startz) #set position for next movement
+                                self.AppendPause(int(dwell_time)*1000)#pause for pausems
                 
                         
                         
                         self.probe = False
                 elif self.probe and self.ref_probe:
-                        
-                        self.AppendProbe(x,y) # adds G0 z- step command then sets back to absolute
-                        self.AppendPause(int(sample_time)*1000) #pause for sampling time
-                        self.Zspeed(self.zspeedup) #set z speed to zspeedup
-                        self.AppendPos(x, y, self.startz) #set position for next movement
-                        self.AppendPause(int(dwell_time)*1000) #pause for pausems
+                        if self.ref_z_first:
+                                self.Zspeed(self.zspeed)
+                                self.appendPosZ(z)
+                                self.AppendPosXY(x,y)
+                        else:
+                                self.AppendProbe(x,y) # adds G0 z- step command then sets back to absolute
+                                self.AppendPause(int(sample_time)*1000) #pause for sampling time
+                                self.Zspeed(self.zspeedup) #set z speed to zspeedup
+                                self.AppendPos(x, y, self.startz) #set position for next movement
+                                self.AppendPause(int(dwell_time)*1000) #pause for pausems
                 else:
-                        self.AppendPosXY(x,y) #set position for x and y
-                        self.Zspeed(self.zspeed)
-                        self.AppendPos(x,y,z)
-                        self.AppendPause(int(sample_time)*1000)
-                        self.Zspeed(self.zspeedup)
-                        self.AppendPos(x,y,self.startz)
-                        self.AppendPause(int(dwell_time)*1000)
+                        if self.ref_z_first:
+                                self.Zspeed(self.zspeed)
+                                self.appendPosZ(z)
+                                self.AppendPosXY(x,y)
+                        else:
+                                self.AppendPosXY(x,y) #set position for x and y
+                                self.Zspeed(self.zspeed)
+                                self.AppendPos(x,y,z)
+                                self.AppendPause(int(sample_time)*1000)
+                                self.Zspeed(self.zspeedup)
+                                self.AppendPos(x,y,self.startz)
+                                self.AppendPause(int(dwell_time)*1000)
         def AppendPos(self,x,y,z, speed = None): #going to be obsoluete soon
                 '''
                 set the position of the printer head (added tp list of commands)
@@ -418,14 +442,14 @@ class Gcode(object):
                 self.AppendPos(self.pathtable[0][0],self.pathtable[0][1],self.startz)
                 self.AppendPause(1000)
               
-                if self.ref_flag and not self.ref_end_flag: #should work
+                if self.ref_flag and (not self.ref_end_flag or self.ref_both_flag): #should work
                        
                         self.refrence(self.ref_x, self.ref_y, self.ref_dwell, self.ref_sample, self.ref_z)
                       
                 for k in self.pathtable:
                         #Debug: print(k[0],k[1])
                         self.Sampling(k[0],k[1]) #sampling movement
-                if self.ref_flag and self.ref_end_flag:
+                if self.ref_flag and (self.ref_end_flag or self.ref_both_flag):
                         self.refrence(self.ref_x, self.ref_y, self.ref_dwell, self.ref_sample, self.ref_z)
 
                 self.codelist.append(("\nG92 Z%f")%(self.startz))

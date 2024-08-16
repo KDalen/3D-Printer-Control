@@ -215,7 +215,10 @@ class MyApp(BaseUiClass, QtWidgets.QMainWindow):  # inherit all properties from 
         self.ref_sample.valueChanged.connect(lambda value: setattr(self.Gcode, 'ref_sample', value))
         
         
-        self.ref_end_btn.clicked.connect(lambda: self.ref_end())
+        self.ref_end_rb.clicked.connect(lambda: self.ref_end())
+        self.ref_start_rb.clicked.connect(lambda: self.ref_end())
+        self.ref_both_rb.clicked.connect(lambda: self.ref_end())
+        
         
         self.send_btn.clicked.connect(lambda: self.send_absolute_pos())
         
@@ -236,6 +239,7 @@ class MyApp(BaseUiClass, QtWidgets.QMainWindow):  # inherit all properties from 
         self.camThread_start_btn.clicked.connect(lambda: self.start_camera())
         self.camThread_stop_btn.clicked.connect(lambda: self.stop_camera())
         
+        self.z_first_rb.toggled.connect(lambda: self.z_first_last())
         
     
       
@@ -1170,14 +1174,27 @@ class MyApp(BaseUiClass, QtWidgets.QMainWindow):  # inherit all properties from 
             self.gc_sety_sel.setEnabled(True)
             
     def ref_end(self):
-        if self.ref_end_btn.isChecked():
-            self.ref_end_btn.setText("On")
+        if self.ref_end_rb.isChecked():
+            self.ref_end_rb.setText("On")
             
             self.Gcode.ref_end_flag = True
-        else:
-            self.ref_end_btn.setText("Off")
+            self.Gcode.ref_both_flag = False
+        elif self.ref_both_rb.isChecked():
+            self.Gcode.ref_both_flag = True
             self.Gcode.ref_end_flag = False
+        else:
+            self.ref_end_rb.setText("Off")
+            self.Gcode.ref_end_flag = False
+            self.Gcode.ref_both_flag = False
+            
     #Action Buttons for Pump
+    
+    def z_first_last(self):
+        self.Gcode.ref_z_first = self.z_first_rb.isChecked()
+        print("Z first: %s" % self.Gcode.ref_z_first)
+        
+        
+        
     def calculate_parameters_sample(self):
         
         
