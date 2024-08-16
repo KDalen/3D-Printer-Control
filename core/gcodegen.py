@@ -214,6 +214,7 @@ class Gcode(object):
                 elif not self.probe and self.ref_probe:
                         self.probe = True
                         
+                        self.AppendPosXY(x,y)
                         self.AppendProbe(x,y) # adds G0 z- step command then sets back to absolute
                         self.AppendPause(int(sample_time)*1000) #pause for sampling time
                         self.Zspeed(self.zspeedup) #set z speed to zspeedup
@@ -225,6 +226,7 @@ class Gcode(object):
                         self.probe = False
                 elif self.probe and self.ref_probe:
                         
+                        self.AppendPosXY(x,y)
                         self.AppendProbe(x,y) # adds G0 z- step command then sets back to absolute
                         self.AppendPause(int(sample_time)*1000) #pause for sampling time
                         self.Zspeed(self.zspeedup) #set z speed to zspeedup
